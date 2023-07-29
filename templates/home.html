@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>简单微博</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f8fa;
+            color: #14171a;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #1da1f2;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+        }
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .input-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .input-container input[type="text"] {
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            width: 50%;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #1da1f2;
+            color: white;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .tweet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+        .tweet h4 {
+            margin: 0;
+            color: #1da1f2;
+        }
+        .tweet p {
+            margin: 5px 0 10px 0;
+            font-size: 16px;
+        }
+        .tweet small {
+            color: #657786;
+            font-size: 14px;
+        }
+        .tweet .image-missing {
+            font-style: italic;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>Leal的梦境空间</h1>
+    <form method="POST">
+        <div class="input-container">
+            <label>昵称:</label>
+            <input type="text" name="username">
+        </div>
+        <div class="input-container">
+            <label>梦境内容:</label>
+            <input type="text" name="content">
+        </div>
+        <input type="submit" value="发表">
+    </form>
+    {% for tweet in tweets %}
+    <div class="tweet">
+        <h4>{{ tweet.username }}</h4>
+        <p>{{ tweet.content }}</p>
+        <small>{{ tweet.display_timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+        {% if tweet.task_file_name %}
+        <img src="{{ tweet.task_file_name }}" alt="generated image" style="max-width: 100%; border-radius: 10px;">
+        {% elif tweet.recent>0 %}
+        <p class="image-missing">梦境图片正在生成中...</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</body>
+</html>
